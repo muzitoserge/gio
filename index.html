@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Un petit mot pour toi 💌</title>
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #fff8f2, #fde6f4);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2em;
+      min-height: 100vh;
+      color: #444;
+    }
+
+    #box {
+      max-width: 700px;
+      font-size: 1.2rem;
+      line-height: 1.7;
+      border-radius: 20px;
+      background: white;
+      padding: 2em;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      border: 2px solid #c1a872;
+      text-align: center;
+      position: relative;
+    }
+
+    .input-block {
+      margin-top: 1.5em;
+    }
+
+    input, textarea {
+      padding: 0.5em 1em;
+      font-size: 1rem;
+      border: 2px solid #c1a872;
+      border-radius: 12px;
+      outline: none;
+      width: 90%;
+      max-width: 500px;
+      margin-bottom: 1em;
+      resize: none;
+    }
+
+    button {
+      padding: 0.6em 1.5em;
+      font-size: 1rem;
+      background: #c1a872;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #b08c5c;
+    }
+
+    .floating-heart {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      font-size: 2rem;
+      animation: float 3s infinite ease-in-out;
+      opacity: 0.8;
+    }
+
+    @keyframes float {
+      0%   { transform: translateY(0); opacity: 0.8; }
+      50%  { transform: translateY(-15px); opacity: 1; }
+      100% { transform: translateY(0); opacity: 0.8; }
+    }
+
+    footer {
+      margin-top: 2em;
+      font-size: 0.85rem;
+      color: #999;
+      text-align: center;
+    }
+
+    .response-block {
+      margin-top: 2em;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="box">
+    <div id="message"></div>
+
+    <div class="input-block" id="nameInputBlock" style="display: none;">
+      <p>Tu veux entrer ton prenom? 😊</p>
+      <input type="text" id="name" placeholder="Ton prénom..." />
+      <br />
+      <button onclick="handleName()">Valider</button>
+    </div>
+
+    <div class="response-block" id="responseBlock" style="display: none;">
+      <p>Tu veux me répondre ? 💬</p>
+      <form action="https://formsubmit.co/sergiomuzito@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="Réponse à ton mot doux 💖">
+        <input type="hidden" name="_captcha" value="false">
+        <textarea name="message" rows="4" placeholder="Tu peux me repondre ici..." required></textarea>
+        <br />
+        <button type="submit">Envoyer ✨</button>
+      </form>
+    </div>
+
+    <div class="floating-heart">💗</div>
+  </div>
+
+  <footer>
+    Fait avec amour & JavaScript 🧸✨
+  </footer>
+
+  <script>
+    const hearts = ["❤️", "💛", "💚", "💙", "💜", "🧡"];
+    const messageEl = document.getElementById("message");
+    const inputBlock = document.getElementById("nameInputBlock");
+    const responseBlock = document.getElementById("responseBlock");
+
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function typeText(text, delay = 40) {
+      for (let char of text) {
+        messageEl.innerHTML += char;
+        await sleep(delay);
+      }
+      messageEl.innerHTML += "<br/>";
+      await sleep(400);
+    }
+
+    async function startMessage() {
+      await typeText("Coucou, toi 👋");
+      await typeText("J’avais juste envie de te dire quelque chose...");
+      await typeText("Mais d'abord, réponds-moi :");
+      inputBlock.style.display = "block";
+    }
+
+    async function handleName() {
+      const name = document.getElementById("name").value.trim();
+      if (!name) return;
+
+      inputBlock.style.display = "none";
+      messageEl.innerHTML = "";
+
+      await typeText(`Oh ${name}... joli prénom 🥰 Mais t’étais pas censé t’appeler Mergio ? 😄`);
+      await typeText("Devine quoi...");
+      await sleep(1500);
+      await typeText("...");
+      await sleep(800);
+      await typeText("Tu comptes beaucoup pour moi. Vraiment. 💖");
+      await sleep(1000);
+      await typeText(`${randomHeart()} ${name}, t’es quelqu’un de spécial. ${randomHeart()}`);
+      await typeText("Je voulais que tu le saches.");
+      await typeText("Voilà. C’est tout. C’était juste ça. 💌");
+      await sleep(1000);
+      await typeText("Je t’aime, belle personne 💫");
+
+      responseBlock.style.display = "block";
+    }
+
+    function randomHeart() {
+      return hearts[Math.floor(Math.random() * hearts.length)];
+    }
+
+    startMessage();
+  </script>
+
+</body>
+</html>
