@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Merci ✨</title>
+    <style>
+      body {
+        background: linear-gradient(to bottom right, #fff8f2, #fde6f4);
+        font-family: "Segoe UI", sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 2em;
+        color: #444;
+        text-align: center;
+      }
+
+      .container {
+        background: white;
+        border: 2px solid #c1a872;
+        padding: 2em;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        animation: fadeIn 1s ease;
+      }
+
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 0.5em;
+      }
+
+      p {
+        font-size: 1.2rem;
+        line-height: 1.6;
+        margin-bottom: 1.5em;
+      }
+
+      .heart {
+        font-size: 2.5rem;
+        animation: pulse 1.5s infinite ease-in-out;
+      }
+
+      footer {
+        margin-top: 2em;
+        font-size: 0.85rem;
+        color: #999;
+      }
+
+      @keyframes pulse {
+        0%, 100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Merci pour ta réponse 💌</h1>
+      <p>Ton petit mot a bien été reçu</p>
+      <div class="heart">💗</div>
+    </div>
+
+    <footer>Fait avec amour & JavaScript 🧸✨</footer>
+  </body>
+</html>
