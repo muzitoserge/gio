@@ -67,7 +67,7 @@
         bottom: 10px;
         right: 10px;
         font-size: 2rem;
-        animation: float 3s infinite ease-in-out;
+        animation: float 3s infinite ease-in-out, pulse 1.5s infinite;
         opacity: 0.8;
       }
 
@@ -86,6 +86,15 @@
         }
       }
 
+      @keyframes pulse {
+        0%, 100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+      }
+
       footer {
         margin-top: 2em;
         font-size: 0.85rem;
@@ -96,17 +105,28 @@
       .response-block {
         margin-top: 2em;
       }
+
+      @media (max-width: 500px) {
+        #box {
+          padding: 1.5em;
+        }
+
+        input,
+        textarea {
+          width: 100%;
+        }
+      }
     </style>
   </head>
   <body>
     <div id="box">
-      <div id="message"></div>
+      <div id="message" aria-live="polite"></div>
 
       <div class="input-block" id="nameInputBlock" style="display: none">
-        <p>Tu veux entrer ton prenom? 😊</p>
-        <input type="text" id="name" placeholder="Ton prénom..." />
+        <p>Tu veux entrer ton prénom ? 😊</p>
+        <input type="text" id="name" placeholder="Ton prénom..." required />
         <br />
-        <button onclick="handleName()">Valider</button>
+        <button onclick="handleName()" aria-label="Valider le prénom">Valider</button>
       </div>
 
       <div class="response-block" id="responseBlock" style="display: none">
@@ -121,14 +141,15 @@
             value="Réponse à ton mot doux 💖"
           />
           <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_next" value="https://example.com/merci.html" />
           <textarea
             name="message"
             rows="4"
-            placeholder="Tu peux me repondre ici..."
+            placeholder="Tu peux me répondre ici..."
             required
           ></textarea>
           <br />
-          <button type="submit">Envoyer ✨</button>
+          <button type="submit" aria-label="Envoyer le message">Envoyer ✨</button>
         </form>
       </div>
 
@@ -158,16 +179,22 @@
 
       async function startMessage() {
         await typeText("Coucou, toi 👋");
+        await sleep(5000);
         await typeText("Tu vas bien j'espère");
+        await sleep(800);
         await typeText("Longue journée?");
+        await typeText("Belle quand même hein?");
+        await sleep(1500);
         await typeText("J’avais juste envie de te dire quelque chose...");
+        await sleep(800);
         await typeText("Mais d'abord, réponds-moi :");
         inputBlock.style.display = "block";
       }
 
       async function handleName() {
-        const name = document.getElementById("name").value.trim();
-        if (!name) return;
+        const nameInput = document.getElementById("name");
+        const name = nameInput.value.trim();
+        if (!name) return nameInput.focus();
 
         // Ajouter un champ caché avec le prénom dans le formulaire
         const form = document.querySelector("form");
@@ -200,8 +227,12 @@
           "Je sais, le souhait arrive en retard, je devrais faire ce truc un peu original, tu vois 😏"
         );
         await sleep(1000);
+        await typeText("Et puis t'as laissé en vue depuis l'autre jour 😭");
+        await sleep(1000);
+        await typeText("Mais c'est pas grave, je te pardonne");
+        await sleep(1000);
         await typeText(
-          "Merci pour ta vie, ta présence dans la mienne, et tout ce qu'on a vecu."
+          "Merci pour ta vie, ta présence dans la mienne, et tout ce qu'on a vécu."
         );
         await sleep(800);
         await typeText("Je te souhaite tout le meilleur dans le futur.");
